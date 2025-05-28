@@ -36,7 +36,7 @@ def batch_get_quotes(symbols: list[str] = Query(...)):
     for symbol in symbols:
         r = requests.get(f"{FINNHUB_BASE}/quote", params={"symbol": symbol, "token": FINNHUB_API_KEY})
         results[symbol] = r.json()
-    return results
+    return {"data": results}
 
 @app.get("/batch/getFundamentals")
 def batch_get_fundamentals(symbols: list[str] = Query(...)):
@@ -44,7 +44,7 @@ def batch_get_fundamentals(symbols: list[str] = Query(...)):
     for symbol in symbols:
         r = requests.get(f"{FINNHUB_BASE}/stock/metric", params={"symbol": symbol, "metric": "all", "token": FINNHUB_API_KEY})
         results[symbol] = r.json()
-    return results
+    return {"data": results}
 
 @app.get("/batch/getNewsSentiment")
 def batch_get_news_sentiment(symbols: list[str] = Query(...)):
@@ -52,4 +52,4 @@ def batch_get_news_sentiment(symbols: list[str] = Query(...)):
     for symbol in symbols:
         r = requests.get(f"{FINNHUB_BASE}/news-sentiment", params={"symbol": symbol, "token": FINNHUB_API_KEY})
         results[symbol] = r.json()
-    return results
+    return {"data": results}
